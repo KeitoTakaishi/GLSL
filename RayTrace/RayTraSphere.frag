@@ -1,5 +1,5 @@
 /*
-球体を示すRayMarchingのコード
+practice mod
 */
 
 #ifdef GL_ES

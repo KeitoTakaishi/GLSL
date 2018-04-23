@@ -1,3 +1,6 @@
+/*
+practice mod
+*/
 #ifdef GL_ES
 precision mediump float;
 #endif
@@ -15,7 +18,7 @@ float dist_func(vec3 pos, float size)
   return length(pos) - size ;
 }
 
-vec3 onRep(vec3 p float interval){
+vec3 onRep(vec3 p ,float interval){
   return mod(p, interval) - interval*0.5;
 }
 

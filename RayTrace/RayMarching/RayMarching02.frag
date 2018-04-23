@@ -1,3 +1,7 @@
+/*
+mix object 01
+*/
+
 precision mediump float;
 uniform float time;
 uniform vec2 mouse;
@@ -11,14 +15,18 @@ const vec3 lightDir = vec3(-0.57, 0.57, 0.57);
 
 // torus distance function
 float distFuncTorus(vec3 p){
-    vec2 t = vec2(0.75, 0.25);
+    vec2 t = vec2(0.75, 0.15);
     vec2 r = vec2(length(p.xy) - t.x, p.z);
+    // if(p.y < sin(time*2.0)){
+    //   return 100.;
+    // }
     return length(r) - t.y;
 }
 
 // floor distance function
 float distFuncFloor(vec3 p){
     return dot(p, vec3(0.0, 1.0, 0.0)) + 1.0;
+
 }
 
 // distance function
@@ -26,6 +34,8 @@ float distFunc(vec3 p){
     float d1 = distFuncTorus(p);
     float d2 = distFuncFloor(p);
     return min(d1, d2);
+    // return max(d1, d2);
+
 }
 
 vec3 genNormal(vec3 p){
