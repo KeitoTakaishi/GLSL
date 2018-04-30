@@ -57,8 +57,8 @@ void main(void){
 
     vec3 cSide;
     //cDir = vec3()
-    vec3 cDir = vec3(0., 0., 1.);
-    vec3 cUp  = vec3(1.*sin(time*3.0+abs(clamp(p.x, -3., 0.0)*1.5*abs(sin(time)))), 1.*cos(time*3.0+abs(clamp(p.x,0., 3.0)*1.5*abs(sin(time)))), 0.);
+   // vec3 cDir = vec3(0., 0., 1.);
+    //vec3 cUp  = vec3(1.*sin(time*3.0+abs(clamp(p.x, -3., 0.0)*1.5*abs(sin(time)))), 1.*cos(time*3.0+abs(clamp(p.x,0., 3.0)*1.5*abs(sin(time)))), 0.);
 
     cSide = cross(cDir, cUp);
     float targetDepth = -1.0;
