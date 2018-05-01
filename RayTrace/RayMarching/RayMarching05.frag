@@ -21,7 +21,7 @@ void main(void) {
     vec4 d;
     p.x-=.4; // init ray
     //r(p.xz,.13);
-    //r(p.yz,.2); r(p.xy,.1);   // camera rotations
+    r(p.yz,.2); r(p.xy,.1);   // camera rotations
     d = p;
     //ray dir = ray0-vec3(0)
     p.z += 15.*T;

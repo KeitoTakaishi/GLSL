@@ -14,6 +14,7 @@ void main() {
   */
   float modSize = 0.1;
   float rad =0.02;
+
   float blockCount = 0.0;
   vec2 flag = vec2(ceil(p.x / modSize), ceil(p.y / modSize));
 
@@ -30,5 +31,5 @@ void main() {
                             rad / length(mod( p + vec2(sin(time*12.23)*rad, cos(time*2.23)*rad), modSize) - modSize/2.),
                             1.0);
      }
-     
+
 }
