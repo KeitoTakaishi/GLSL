@@ -25,16 +25,16 @@ float sdSPhere(vec3 pos)
 float udBox( vec3 p, vec3 b )
 {
   //return length(max(abs(trans(p)-b), 0.));
-  p.yz *= mat2(cos(time), -sin(time), sin(time), cos(time));
-  p.xy *= mat2(cos(time), -sin(time), sin(time), cos(time));
+  //p.yz *= mat2(cos(time), -sin(time), sin(time), cos(time));
 
-  return length(max(abs(p)-b,0.0))-0.01;
+  return length(max(abs(trans(p))-b,0.0));
+  //return length(max(abs(p)-b,0.0));
 }
 
 float opS(float d1, float d2)
 {
-  //return max(-d1, d2);
-  return min(d1, d2);
+  //return max(d1, d2);
+  //return min(d1, d2);
   return max(-d1, d2);
 
 }
@@ -60,14 +60,16 @@ void main()
   //vec3 camSide = cross(camUp, camDir);
   vec3 camSide = vec3(1.0, 0., 0.);
   float focus = 1.0;
-  const vec3 lightDir = vec3(5.0, 5.0, 5.0);
-
-  //camPos += vec3(0.0, 0.0, -3.0*time*1.5);
+  const vec3 lightDir = vec3(1, 1.0, 1.0);
+  float t = time * 0.8;
+  camPos += vec3(0.0, 0.0, -3.0*t);
 
 
   vec3 rayDir = normalize(vec3(camSide*pos.x+camUp*pos.y+camDir*focus));
-  //rayDir.xy *= mat2(cos(time), -sin(time), sin(time), cos(time));
-  //rayDir.yz *= mat2(cos(time), -sin(time), sin(time), cos(time));
+
+  rayDir.xy *= mat2(cos(t), -sin(t), sin(t), cos(t));
+
+	rayDir.yz *= mat2(cos(time), -sin(time), sin(time), cos(time));
 
 
   vec3 ray = camPos;
@@ -75,21 +77,26 @@ void main()
   float d = 0.;
   float total_d = 0.;
   const int MAX_MARCH = 128;
-  const float MAX_DIST = 100.0;
+  const float MAX_DIST = 28.0;
 
   for(int i = 0; i < MAX_MARCH; i++){
     //d = sdSPhere(ray);
-    d = udBox(ray, vec3(1.0, 1.0, 1.0));
-    //d = opS(sdSPhere(ray), udBox(ray, vec3(.5, .5, .5)));
+    //d = udBox(ray, vec3(1.0, 1.0, 1.0));
+
+    float boxSize = 0.9;
+    boxSize += 0.3*sin(time*2.0);
+    d = opS(sdSPhere(ray), udBox(ray, vec3(boxSize, boxSize, boxSize)));
     march = i;
     total_d += d;
     ray += rayDir * d;
 
     if(d < 0.001){
+      //ray.yz *= mat2(cos(time), -sin(time), sin(time), cos(time));
+      //ray.xy *= mat2(cos(time), -sin(time), sin(time), cos(time));
       vec3 normal = getNormal(ray);
-      float diff = clamp(dot(lightDir, normal), 0.01, 1.0);
-      //gl_FragColor = vec4(vec3(diff) + vec3(0.1, 0.1, 0.1), 1.0);
-      gl_FragColor = vec4(vec3(0.2, 0.2, 0.0), 1.0);
+      float diff = clamp(dot(lightDir, normal), 0.1, 1.0);
+      gl_FragColor = vec4(vec3(diff)+vec3(0.1, mod(gl_FragCoord.x,0.9*abs(sin(t+gl_FragCoord.y))), 0.3), 1.0);
+      //gl_FragColor = vec4(vec3(0.2, 0.2, 0.0), 1.0);
       break;
     }
     if(total_d > MAX_DIST){
@@ -100,7 +107,7 @@ void main()
       //gl_FragColor = vec4(vec3(diff) + vec3(0.0, 0.0, 0.0), 1.0);
       break;
     }else{
-      gl_FragColor = vec4(0.4+0.3*sin(time*2.0), 0.2, 0.5, 1.0);
+      gl_FragColor = vec4(0.0,0.0, 0.0, 1.0);
     }
   }
 }
