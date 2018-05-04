@@ -1,31 +1,17 @@
-/*
- * Original shader from: https://www.shadertoy.com/view/lsycDG
- */
-
 #ifdef GL_ES
 precision mediump float;
 #endif
 
-// glslsandbox uniforms
 uniform float time;
 uniform vec2 resolution;
 
-// shadertoy globals
 float iTime;
 vec3  iResolution;
 
 // Emulate a black texture
 #define texture(s, uv) vec4(0.0)
 
-// --------[ Original ShaderToy begins here ]---------- //
-// @lsdlive
-
-// Doodling session for live-coding or sketching new ideas.
-// Thanks to iq, mercury, lj, shane, shau, aiekick, balkhan
-// & all shadertoyers.
-// Greets to all the shader showdown paris gang.
-
-
+//rotate
 mat2 r2d(float a) {
 	float c = cos(a), s = sin(a);
 	return mat2(c, s, -s, c);
@@ -104,7 +90,7 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord)
 {
 	vec2 uv = (fragCoord - .5*iResolution.xy) / iResolution.y;
 
-	float dt = iTime * 8.3;
+	float dt = iTime * .3;
 
 	vec3 ro = vec3(0, 0, -3. + dt);
 	vec3 ta = vec3(0, 0, dt);
